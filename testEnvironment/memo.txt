@@ -1,0 +1,9 @@
+docker build . -t test-env
+docker run -p 8080:8080 -d test-env
+
+
+docker ps
+docker stop [CONTAINER ID]
+
+
+http://localhost:8080

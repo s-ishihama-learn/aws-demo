@@ -1,0 +1,13 @@
+FROM amazonlinux:2
+
+# install amazon-linux-extras
+RUN amazon-linux-extras install -y
+
+# install nginx
+RUN amazon-linux-extras install nginx1 -y
+
+# open port 8001
+EXPOSE 8001
+
+# container cmd Nginxを起動します
+CMD ["/usr/sbin/nginx", "-g", "daemon off;"]

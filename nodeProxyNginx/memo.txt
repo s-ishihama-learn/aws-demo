@@ -1,0 +1,36 @@
+# Dockerイメージの作成
+docker-compose build
+# Dockerイメージの確認
+docker images
+
+# コンテナを起動
+docker-compose up -d
+docker-compose ps
+
+# コンテナを停止
+docker-compose down
+
+
+http://localhost:8000/
+http://localhost:8000/hello?kind=1
+http://localhost:8000/hello?kind=2
+http://localhost:8001/
+http://localhost:8002/
+http://localhost:8003/
+
+
+
+https://knowledge.sakura.ad.jp/16862/
+https://amateur-engineer-blog.com/docker-compose-network/
+
+
+docker exec -i -t CONTAINER_ID /bin/bash
+docker exec -i -t node_16 /bin/bash
+docker exec -i -t nginx_8001 /bin/bash
+docker exec -i -t nginx_8002 /bin/bash
+docker exec -i -t nginx_8003 /bin/bash
+NAME                IMAGE               COMMAND                  SERVICE               CREATED             STATUS              PORTS
+nginx_8001          nginx_8001:latest   "/usr/sbin/nginx -g …"   node-test-nginx8001   7 seconds ago       Up 1 second         0.0.0.0:8001->8001/tcp
+nginx_8002          nginx_8002:latest   "/usr/sbin/nginx -g …"   node-test-nginx8002   7 seconds ago       Up 1 second         0.0.0.0:8002->8002/tcp
+nginx_8003          nginx_8003:latest   "/usr/sbin/nginx -g …"   node-test-nginx8003   7 seconds ago       Up 1 second         0.0.0.0:8003->8003/tcp
+node_16             node:16.14.0        "docker-entrypoint.s…"   node-test-node        7 seconds ago       Up 1 second         0.0.0.0:8000->8000/tcp

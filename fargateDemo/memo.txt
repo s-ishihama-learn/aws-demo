@@ -1,0 +1,44 @@
+docker build -t flask-demo-app .
+docker build -t flask-demo-app2 . --platform=linux/x86_64
+docker images
+
+docker run -p 5000:5000 flask-demo-app
+docker run -it -p 5000:5000 flask-demo-app /bin/bash
+
+
+025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2
+aws ecr get-login-password | docker login --username AWS --password-stdin https://025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2
+docker tag flask-demo-app2:latest 025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2:latest
+docker images
+
+docker push 025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2:latest
+aws ecr describe-images --repository-name sample-ecr-fargate2
+
+
+C:\Users\ishihama\ProjectsDocker\fargateDemo>aws ecr describe-images --repository-name sample-ecr-fargate2
+{
+    "imageDetails": [
+        {
+            "registryId": "025134172950",
+            "repositoryName": "sample-ecr-fargate2",
+            "imageDigest": "sha256:7ccc03b00bad20fb68a261ff37b7d09152a82fe39cbe137cb310cf5bb24e772d",
+            "imageTags": [
+                "latest"
+            ],
+            "imageSizeInBytes": 379949925,
+            "imagePushedAt": "2023-10-22T21:36:29+09:00",
+            "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "artifactMediaType": "application/vnd.docker.container.image.v1+json"
+        },
+        {
+            "registryId": "025134172950",
+            "repositoryName": "sample-ecr-fargate2",
+            "imageDigest": "sha256:9e120e03a355f085fbce30e73d01a85d791812b86b24d0881acb8a576d83762b",
+            "imageSizeInBytes": 350762303,
+            "imagePushedAt": "2023-10-22T10:05:11+09:00",
+            "imageManifestMediaType": "application/vnd.docker.distribution.manifest.v2+json",
+            "artifactMediaType": "application/vnd.docker.container.image.v1+json",
+            "lastRecordedPullTime": "2023-10-22T16:04:50.475000+09:00"
+        }
+    ]
+}

@@ -1,0 +1,40 @@
+docker build . -t node-http
+docker build . -t node-http --platform=linux/x86_64
+docker run -p 8000:8000 -d node-http
+
+
+docker ps
+docker stop [CONTAINER ID]
+
+
+http://localhost:8000
+http://localhost:8000/hello
+http://localhost:8000/hello?kind=1
+http://localhost:8000/hello?kind=2
+
+
+
+
+AWS Fargeateç\íz
+
+025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2
+aws ecr get-login-password | docker login --username AWS --password-stdin https://025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2
+docker tag flask-demo-app2:latest 025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2:latest
+docker images
+
+docker push 025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/sample-ecr-fargate2:latest
+aws ecr describe-images --repository-name sample-ecr-fargate2
+
+
+
+
+Resource handler returned message: "Error occurred during operation 'ECS Deployment Circuit Breaker was triggered'." (RequestToken: 8f2fe692-f2b4-4c91-575e-d6988ab41617, HandlerErrorCode: GeneralServiceException)
+"ECS Deployment Circuit Breaker was triggered"
+
+025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/ecs-demo-app
+aws ecr get-login-password | docker login --username AWS --password-stdin https://025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/ecs-demo-app
+docker tag node-http:latest 025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/ecs-demo-app:latest
+docker images
+
+docker push 025134172950.dkr.ecr.ap-northeast-1.amazonaws.com/ecs-demo-app:latest
+aws ecr describe-images --repository-name ecs-demo-app

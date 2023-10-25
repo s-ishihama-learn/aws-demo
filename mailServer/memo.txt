@@ -1,0 +1,19 @@
+https://devnote.tech/ja/2021/08/maildev-docker-mail-server-on-your-local-environment-ja/
+
+docker-compose up -d mail
+docker-compose ps
+
+http://localhost:1080
+
+PowerShell
+------------------------------------------------------------------------------
+Send-MailMessage `
+-from 'dev@localhost' `
+-to 'dev.to@localhost' `
+-subject 'subject' `
+-body 'test' `
+-smtpServer 'localhost' `
+-port 1025
+------------------------------------------------------------------------------
+
+docker-compose down

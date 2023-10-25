@@ -1,0 +1,12 @@
+npm install http-proxy
+node server.js
+
+http://localhost:8000
+http://localhost:8000/hello
+http://localhost:8000/hello?kind=1
+http://localhost:8000/hello?kind=2
+
+
+node server1.js
+node server2.js
+http://localhost:8080

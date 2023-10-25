@@ -1,0 +1,119 @@
+version: "3"
+
+services:
+  # サービス名
+  node-test-node:
+    # 利用するイメージ
+    image: node:16.14.0
+    # コンテナ名
+    container_name: node_16
+    # 作業ディレクトリ
+    working_dir: /usr/src/app
+    # 起動したままにする
+    tty: true
+    # ネットワーク
+    networks:
+      mynet:
+      # - network0
+      # - network1
+      # - network2
+      # - network3
+    # Dickerfile
+    build:
+      context: .
+      dockerfile: Dockerfile_Node
+    # マウントするファイル　※ホスト→dockerコンテナへ
+    volumes:
+      - ./:/usr/src/app
+    ports:
+      - "8000:8000"
+    command: >
+        bash -c "npm install &&
+        npm install nodemon -g &&
+        nodemon src/server.js"
+
+  # サービス名
+  node-test-nginx8001:
+    # 利用するイメージ
+    image: nginx_8001:latest
+    # コンテナ名
+    container_name: nginx_8001
+    # ネットワーク
+    networks: 
+      # - network1
+      mynet:
+        ipv4_address: 172.10.0.21
+    # Dickerfile
+    build:
+      context: .
+      dockerfile: Dockerfile_Nginx1
+    # マウントするファイル　※ホスト→dockerコンテナへ
+    volumes:
+      - type: bind
+        source: ./nginx_conf/nginx_8001.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: ./nginx_html/port8001.html
+        target: /usr/share/nginx/html/index.html
+    ports:
+      - "8001:8001"
+
+  # サービス名
+  node-test-nginx8002:
+    # 利用するイメージ
+    image: nginx_8002:latest
+    # コンテナ名
+    container_name: nginx_8002
+    # ネットワーク
+    networks:
+      # - network2
+      mynet:
+        ipv4_address: 172.10.0.22
+    # Dickerfile
+    build:
+      context: .
+      dockerfile: Dockerfile_Nginx2
+    # マウントするファイル　※ホスト→dockerコンテナへ
+    volumes:
+      - type: bind
+        source: ./nginx_conf/nginx_8002.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: ./nginx_html/port8002.html
+        target: /usr/share/nginx/html/index.html
+    ports:
+      - "8002:8002"
+
+  # サービス名
+  node-test-nginx8003:
+    # 利用するイメージ
+    image: nginx_8003:latest
+    # コンテナ名
+    container_name: nginx_8003
+    # ネットワーク
+    networks:
+      # - network3
+      mynet:
+        ipv4_address: 172.10.0.23
+    # Dickerfile
+    build:
+      context: .
+      dockerfile: Dockerfile_Nginx3
+    # マウントするファイル　※ホスト→dockerコンテナへ
+    volumes:
+      - type: bind
+        source: ./nginx_conf/nginx_8003.conf
+        target: /etc/nginx/nginx.conf
+      - type: bind
+        source: ./nginx_html/port8003.html
+        target: /usr/share/nginx/html/index.html
+    ports:
+      - "8003:8003"
+
+networks:
+  mynet:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.10.0.0/24
